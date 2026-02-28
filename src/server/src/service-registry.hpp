@@ -41,6 +41,10 @@ namespace config {
 class Manager;
 };
 
+namespace AI {
+class Service;
+};
+
 class ServiceRegistry : public QObject {
 
 public:
@@ -78,6 +82,7 @@ public:
   TelemetryService *telemetry() const;
   AudioControlService *audioControl() const;
   AppRuntime *appRuntime() const;
+  AI::Service *ai() const;
 
   void setPowerManager(std::unique_ptr<PowerManager> manager);
   void setWindowManager(std::unique_ptr<WindowManager> manager);
@@ -113,6 +118,7 @@ public:
   void setTelemetry(std::unique_ptr<TelemetryService> telemetry);
   void setAudioControl(std::unique_ptr<AudioControlService> service);
   void setAppRuntime(std::unique_ptr<AppRuntime> service);
+  void setAI(std::unique_ptr<AI::Service>);
 
 private:
   std::unique_ptr<WindowManager> m_windowManager;
@@ -148,4 +154,5 @@ private:
   std::unique_ptr<TelemetryService> m_telemetry;
   std::unique_ptr<AudioControlService> m_audioControl;
   std::unique_ptr<AppRuntime> m_appRuntime;
+  std::unique_ptr<AI::Service> m_ai;
 };
