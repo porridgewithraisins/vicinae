@@ -16,6 +16,7 @@
 #include "overlay-controller/overlay-controller.hpp"
 #include "extensions/vicinae/bug-report-url.hpp"
 #include "qml/vicinae-store-view-host.hpp"
+#include "quick-ai-view-host.hpp"
 #include "settings-controller/settings-controller.hpp"
 #include "services/keybinding/keybinding-service.hpp"
 #include "services/toast/toast-service.hpp"
@@ -434,6 +435,16 @@ void LauncherWindow::forwardSearchText(const QString &text) {
 }
 
 void LauncherWindow::handleReturn() { m_actionPanel->executePrimaryAction(); }
+
+void LauncherWindow::handleTab() {
+  if (!m_isRootSearch) return;
+
+  auto text = m_ctx.navigation->searchText();
+  if (text.length() <= 5) return;
+
+  auto *view = new QuickAIViewHost(text);
+  m_ctx.navigation->pushView(view);
+}
 
 bool LauncherWindow::forwardKey(int key, int modifiers) {
   auto mods = static_cast<Qt::KeyboardModifiers>(modifiers);
