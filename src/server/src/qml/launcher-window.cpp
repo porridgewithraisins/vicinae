@@ -385,6 +385,7 @@ void LauncherWindow::handleCurrentViewChanged() {
   if (!bridge) return;
 
   bool const isRoot = nav->viewStackSize() == 1;
+
   if (m_atRoot != isRoot) {
     m_atRoot = isRoot;
     emit atRootChanged();
@@ -437,7 +438,7 @@ void LauncherWindow::forwardSearchText(const QString &text) {
 void LauncherWindow::handleReturn() { m_actionPanel->executePrimaryAction(); }
 
 void LauncherWindow::handleTab() {
-  if (!m_isRootSearch) return;
+  if (!m_ctx.navigation->isRootSearch()) return;
 
   auto text = m_ctx.navigation->searchText();
   if (text.length() <= 5) return;
